@@ -5,7 +5,7 @@ const getSourceMap = async (url: string) => {
 }
 // // stackFrame.fileName 就是报错的Js代码，需要根据这个Js 获取到对应的source-map
 const findCodeBySourceMap = async (stackFrame: any) => {
-  // 通过向压缩后的 JS 文件路径添加 .map 后缀，获取对应的 source map 文件
+  // 通过axios获取 向压缩后的 JS 文件路径添加 .map 后缀，获取对应的 source map 文件
   const sourceData: any = await getSourceMap(stackFrame.fileName + '.map')
   //   获取到 source-map 文件的内容
   const fileContent = sourceData.data
