@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 // import HelloWorld from './components/HelloWorld.vue'
-import { onMounted } from 'vue'
+// import { onMounted } from 'vue'
 
-onMounted(() => {
-  const number = null
-  if (number.lenght > 1) {
-    console.log('Hello World');
+// onMounted(() => {
+//   const number = null
+//   if (number.lenght > 1) {
+//     console.log('Hello World');
 
-  }
-})
+//   }
+// })
 </script>
 
 <template>
@@ -22,7 +22,7 @@ onMounted(() => {
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
-        <RouterLink to="/trigger">Trigger</RouterLink>
+        <RouterLink to="/trigger">触发js异常</RouterLink>
       </nav>
     </div>
   </header>
