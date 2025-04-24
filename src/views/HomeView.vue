@@ -55,7 +55,9 @@ let stackFrameObj = {
 };
 onMounted(() => {
   try {
+    // 获取本地存储的错误信息
     const jsErrorList = localStorage.getItem('jsErrorList');
+    // 判断是否有错误信息，如果有则展示
     if (jsErrorList) {
       isError.value = true;
       js_error.value = JSON.parse(jsErrorList);
@@ -65,43 +67,62 @@ onMounted(() => {
   }
 });
 const openDialog = (item: any, index: number) => {
+  // 设置对话框可见性为true
   dialogVisible.value = true;
+  // 设置堆栈帧对象
   stackFrameObj = {
+    // 设置行号
     line: item.lineNumber,
+    // 设置列号
     column: item.columnNumber,
+    // 设置索引
     index: index,
   }
-
 }
+
 const sourceMapUpload = async (file: any) => {
+  // 检查上传的文件是否为map文件
   if (file.name.substring(file.name.lastIndexOf('.') + 1) !== 'map') {
+    // 提示用户上传正确的sourceMap文件
     ElMessage.error('请上传正确的sourceMap文件');
     return;
   }
+  // 创建一个FileReader对象
   const reader = new FileReader();
+  // 读取文件内容
   reader.readAsText(file, "utf-8");
+  // 文件读取完成后的回调函数
   reader.onload = async function (evt) {
+    // 从FileReader读取的结果中获取源代码
     const code = await getSource(evt.target?.result, stackFrameObj.line, stackFrameObj.column);
+    // 更新错误信息的源代码
     js_error.value.stack_frames[stackFrameObj.index].origin = code;
+    // 关闭对话框
     dialogVisible.value = false;
   }
   return false;
 }
+
 const getSource = async (sourcemap: any, line: number, column: number) => {
   try {
+    // 创建一个SourceMapConsumer实例
     const consumer = await new sourceMap.SourceMapConsumer(JSON.parse(sourcemap));
     // 通过报错位置查找到对应的源文件名称以及报错行数
+    // 获取原始代码位置
     const originalPosition = consumer.originalPositionFor({
       line: line,
       column: column
     });
+    // 获取源文件的内容
     const source = consumer.sourceContentFor(originalPosition.source);
+    // 返回源文件内容及其对应的行列信息
     return {
       source,
       column: originalPosition.column,
       line: originalPosition.line,
     }
   } catch (e) {
+    // 显示错误信息
     ElMessage.error('sourceMap解析失败');
   }
 }
