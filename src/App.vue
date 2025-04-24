@@ -22,6 +22,7 @@ onMounted(() => {
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/trigger">Trigger</RouterLink>
       </nav>
     </div>
   </header>
@@ -83,12 +84,12 @@ nav a:first-of-type {
   }
 
   nav {
-    text-align: left;
-    margin-left: -1rem;
+    /* text-align: left;
+    margin-left: -1rem; */
     font-size: 1rem;
 
-    padding: 1rem 0;
-    margin-top: 1rem;
+    /* padding: 1rem 0;
+    margin-top: 1rem; */
   }
 }
 </style>
